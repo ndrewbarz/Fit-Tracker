@@ -19,7 +19,7 @@ app.get('/', (req, res) => {
 })
 
 // Определяем роуты
-app.use('/api/register', require('./routes/users'))
+app.use('/api/users', require('./routes/users'))
 app.use('/api/auth', require('./routes/auth'))
 
 app.listen(PORT, () => {
