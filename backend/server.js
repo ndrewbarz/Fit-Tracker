@@ -21,6 +21,7 @@ app.get('/', (req, res) => {
 // Определяем роуты
 app.use('/api/users', require('./routes/users'))
 app.use('/api/auth', require('./routes/auth'))
+app.use('/api/verify', require('./routes/verify'))
 
 app.listen(PORT, () => {
     console.log(`Example app listening at http://localhost:${PORT}`)
