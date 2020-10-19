@@ -11,14 +11,14 @@ connectDB();
 const PORT = process.env.PORT || 5000;
 
 // middleware
-app.use(express.json({ extended: false }));
+app.use(express.json({ extended: true }));
 
 app.get('/', (req, res) => {
   res.json({ message: 'Api working' });
 });
 
 // Определяем роуты
-app.use('/api/users', require('./routes/users'));
+app.use('/api/auth', require('./routes/users'));
 app.use('/api/auth', require('./routes/auth'));
 app.use('/api/verify', require('./routes/verify'));
 

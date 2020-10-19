@@ -2,7 +2,7 @@ const express = require('express');
 const { check, validationResult } = require('express-validator');
 const router = express.Router();
 const bcrypt = require('bcryptjs');
-const jwt = require('jsonwebtoken');
+// const jwt = require('jsonwebtoken');
 const User = require('../models/User');
 
 const dotenv = require('dotenv');
@@ -12,7 +12,7 @@ dotenv.config();
 // @desc		Register user
 // @access	Public
 router.post(
-  '/',
+  '/register',
   [
     check('email', 'Not valid email').isEmail(),
     check('password', 'Enter a passwor with 6 or more characters').isLength({
@@ -50,11 +50,12 @@ router.post(
       let code = Math.floor(Math.random() * (9999 - 1000 + 1)) + 1000;
       user.verifyCode = code;
 
+      let verifyLink = `http://localhost:3000/account/verify?email=${user.email}`;
       // Сохр. юзера
       await user.save();
 
-      res.json({ user });
-      // res.status(200).send('Passed')
+      res.json({ isVerified, verifyLink });
+      res.status(200).send('Passed');
     } catch (err) {
       res.status(500).send({ msg: err.message });
     }

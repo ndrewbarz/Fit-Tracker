@@ -42,7 +42,7 @@ router.get('/:userId', auth, async (req, res) => {
 router.get('/:id', async (req, res) => {
   try {
     const exercise = await Exercise.findById(req.params.id);
-    res.json(exercise);
+    res.json({ exercise });
   } catch (err) {
     res.status(500).json({ msg: 'Server error' });
   }
@@ -54,12 +54,16 @@ router.put('/:id', async (req, res) => {
   const { name, measurementType } = req.body;
 
   try {
-    const exercise = await Exercise.findByIdAndUpdate(req.params.id);
-    exercise.name = name;
-    exercise.measurementType = measurementType;
+    const exercise = await Exercise.findByIdAndUpdate(
+      { _id: req.params.id },
+      { name, measurementType },
+      { new: true }
+    );
+    // exercise.name = name;
+    // exercise.measurementType = measurementType;
 
-    await exercise.save();
-    res.json(exercise);
+    // await exercise.save();
+    res.json({ msg: 'Exercise Updated', exercise });
   } catch (err) {
     res.status(500).json({ msg: 'Server error' });
   }
