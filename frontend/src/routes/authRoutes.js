@@ -15,7 +15,7 @@ const authRoutes = [
   },
   {
     path: '/login',
-    name: 'Sign in',
+    name: 'Sign In',
     icon: AccountBoxIcon,
     component: SignIn,
     layout: '/account',

@@ -6,11 +6,11 @@ const User = require('../models/User');
 // @route		POST api/auth
 // @desc		Verify user & get token
 // @access	    Public
-router.post('/', async (req, res) => {
+router.post('/verify', async (req, res) => {
   const { email, verifyCode } = req.body;
 
   try {
-    let user = await User.findOne({ email });
+    const user = await User.findOne({ email });
     // Проверка введенных данных
     // Проверка email
     if (!user) {
@@ -31,9 +31,9 @@ router.post('/', async (req, res) => {
         });
       };
       res.json({
-        _id: user._id,
-        email: user.email,
-        isVerified: user.isVerified,
+        // _id: user._id,
+        // email: user.email,
+        // isVerified: user.isVerified,
         token: generateToken(user._id),
       });
     } else {

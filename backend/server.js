@@ -20,7 +20,7 @@ app.get('/', (req, res) => {
 // Определяем роуты
 app.use('/api/auth', require('./routes/users'));
 app.use('/api/auth', require('./routes/auth'));
-app.use('/api/verify', require('./routes/verify'));
+app.use('/api/auth', require('./routes/verify'));
 
 app.use('/api/exercises', require('./routes/exercises'));
 // app.use('/api/exercises/:id', require('./routes/exercises'));

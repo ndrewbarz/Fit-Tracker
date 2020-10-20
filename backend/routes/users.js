@@ -2,7 +2,6 @@ const express = require('express');
 const { check, validationResult } = require('express-validator');
 const router = express.Router();
 const bcrypt = require('bcryptjs');
-// const jwt = require('jsonwebtoken');
 const User = require('../models/User');
 
 const dotenv = require('dotenv');
@@ -29,14 +28,14 @@ router.post(
 
     try {
       // Проверяем существует ли пользователь
-      let user = await User.findOne({ email });
+      const userExists = await User.findOne({ email });
       // Если существует
-      if (user) {
+      if (userExists) {
         return res.status(400).json({ msg: 'User exist' });
       }
 
       // Если пользователя нет, определяем нового
-      user = new User({
+      const user = new User({
         email,
         password,
         isVerified,
@@ -54,8 +53,7 @@ router.post(
       // Сохр. юзера
       await user.save();
 
-      res.json({ isVerified, verifyLink });
-      res.status(200).send('Passed');
+      res.json({ verifyCode: user.verifyCode, verifyLink });
     } catch (err) {
       res.status(500).send({ msg: err.message });
     }

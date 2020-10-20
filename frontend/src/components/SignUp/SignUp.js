@@ -23,11 +23,12 @@ const SignUp = ({ location, history }) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
+  const [isSuccessSignup, setIsSuccessSignup] = useState(false);
 
   const dispatch = useDispatch();
 
-  const userRegister = useSelector((state) => state.userRegister);
-  const { loading, error, userInfo } = userRegister;
+  // const userRegister = useSelector((state) => state.userRegister);
+  // const { loading, error, userInfo } = userRegister;
   // console.log(userInfo);
   // const redirect = location.search
   //   ? location.search.split('=')[1]
@@ -39,12 +40,15 @@ const SignUp = ({ location, history }) => {
   //   }
   // }, [history, userInfo, redirect]);
 
-  const submitHandler = (e) => {
+  const submitHandler = async (e) => {
     e.preventDefault();
     if (password !== confirmPassword) {
       console.log('password do not much');
     } else {
-      dispatch(register(email, password));
+      const success = await dispatch(register(email, password));
+      if (success) {
+        setIsSuccessSignup(true);
+      }
     }
   };
 
@@ -87,6 +91,7 @@ const SignUp = ({ location, history }) => {
         {/* <Link to={redirect ? `/register?redirect=${redirect}` : '/register'}>
           Don't have an account? Sign Up
         </Link> */}
+        {isSuccessSignup && <h1>Please check your email</h1>}
       </form>
     </>
   );
