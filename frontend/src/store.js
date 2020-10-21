@@ -7,6 +7,7 @@ import {
   userRegisterReducer,
   userVerifyReducer,
 } from './reducers/userReducers';
+import { getExercisesReducer } from './reducers/exerciseReducer';
 
 // const reducer = combineReducers({
 //   userLogin: userLoginReducer,
@@ -15,16 +16,18 @@ import {
 // });
 
 const reducer = combineReducers({
-  userLogin: userLoginReducer,
+  user: userLoginReducer,
   userRegisterReducer,
-  userVerifyReducer,
+  auth: userVerifyReducer,
+  exercises: getExercisesReducer,
 });
-const userInfoFromStorage = localStorage.getItem('userInfo')
-  ? JSON.parse(localStorage.getItem('userInfo'))
+
+const userInfoFromStorage = localStorage.getItem('user')
+  ? JSON.parse(localStorage.getItem('user'))
   : null;
 
 const initialState = {
-  userLogin: { userInfo: userInfoFromStorage },
+  user: userInfoFromStorage,
 };
 
 const middleware = [thunk];

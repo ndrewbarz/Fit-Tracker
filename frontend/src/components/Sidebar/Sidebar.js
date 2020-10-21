@@ -19,8 +19,8 @@ import { NavLink } from 'react-router-dom';
 
 import { useDispatch, useSelector } from 'react-redux';
 
+// Sidebar styling
 const drawerWidth = 240;
-
 const useStyles = makeStyles((theme) => ({
   root: {
     display: 'flex',
@@ -60,12 +60,14 @@ const useStyles = makeStyles((theme) => ({
 }));
 // const useStyles = makeStyles(styles);
 
-export default function Sidebar({ authRoutes }) {
+export default function Sidebar({ authRoutes, profileRoutes }) {
   const [toggle, setToggle] = useState(null);
-  const userLogin = useSelector((state) => state.userLogin);
-  const { userInfo } = userLogin;
-  const data = localStorage.getItem('token');
-  console.log(data);
+
+  const auth = useSelector((state) => state.auth);
+
+  const { isAuth } = auth;
+  // const data = localStorage.getItem('token');
+  // console.log(data);
 
   // Toggle
   const handleClick = (event) => {
@@ -84,7 +86,7 @@ export default function Sidebar({ authRoutes }) {
           <Typography variant='h6' noWrap className={classes.title}>
             Permanent drawer
           </Typography>
-          {data ? (
+          {isAuth ? (
             <Typography variant='h6' noWrap>
               {/* {userInfo.email} */}
               BLA BLA
@@ -117,21 +119,37 @@ export default function Sidebar({ authRoutes }) {
         <div className={classes.toolbar} />
         <Divider />
         <List>
-          {authRoutes.map((prop, key) => (
-            <NavLink
-              to={prop.layout + prop.path}
-              key={key}
-              activeClassName={classes.active}
-              className={classes.listItemText}
-            >
-              <ListItem button key={key}>
-                <ListItemIcon>
-                  <AccountBoxIcon />
-                </ListItemIcon>
-                <ListItemText primary={prop.name} />
-              </ListItem>
-            </NavLink>
-          ))}
+          {!isAuth
+            ? authRoutes.map((prop, key) => (
+                <NavLink
+                  to={prop.layout + prop.path}
+                  key={key}
+                  activeClassName={classes.active}
+                  className={classes.listItemText}
+                >
+                  <ListItem button key={key}>
+                    <ListItemIcon>
+                      <AccountBoxIcon />
+                    </ListItemIcon>
+                    <ListItemText primary={prop.name} />
+                  </ListItem>
+                </NavLink>
+              ))
+            : profileRoutes.map((prop, key) => (
+                <NavLink
+                  to={prop.layout + prop.path}
+                  key={key}
+                  activeClassName={classes.active}
+                  className={classes.listItemText}
+                >
+                  <ListItem button key={key}>
+                    <ListItemIcon>
+                      <AccountBoxIcon />
+                    </ListItemIcon>
+                    <ListItemText primary={prop.name} />
+                  </ListItem>
+                </NavLink>
+              ))}
         </List>
         <Divider />
         {/* <List>

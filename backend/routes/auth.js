@@ -4,6 +4,9 @@ const router = express.Router();
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const User = require('../models/User');
+const Exercise = require('../models/Exercise');
+const Workout = require('../models/Workout');
+const passport = require('passport');
 
 const dotenv = require('dotenv');
 dotenv.config();
@@ -12,7 +15,10 @@ dotenv.config();
 // @desc		Get Logged in user
 // @access	Private
 router.get('/', (req, res) => {
-  res.send('Get Logged in user');
+  return res.json({
+    id: req.user.id,
+    email: req.user.email,
+  });
 });
 
 // @route		POST api/auth

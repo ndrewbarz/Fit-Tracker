@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const auth = require('../middleware/auth');
+// const auth = require('../middleware/auth');
 const { findByIdAndDelete } = require('../models/Exercise');
 const Exercise = require('../models/Exercise');
 // const User = require('../models/User');
@@ -8,7 +8,7 @@ const Exercise = require('../models/Exercise');
 
 // @route		POST api/exercise
 // @desc		Create exercise
-router.post('/:userId', auth, async (req, res) => {
+router.post('/:userId', async (req, res) => {
   const { name, measurementType } = req.body;
   try {
     const newExercise = new Exercise({
@@ -27,7 +27,7 @@ router.post('/:userId', auth, async (req, res) => {
 
 // @route		GET api/exercises
 // @desc		Get all exercises
-router.get('/:userId', auth, async (req, res) => {
+router.get('/:userId', async (req, res) => {
   try {
     const exercises = await Exercise.find({ userId: req.params.userId });
 

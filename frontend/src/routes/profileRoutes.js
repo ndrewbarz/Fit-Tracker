@@ -14,7 +14,7 @@ const profileRoutes = [
   },
   {
     path: '/exercise',
-    name: 'New Exercise',
+    name: 'Exercises',
     icon: AccountBoxIcon,
     component: Exercise,
     layout: '/account',

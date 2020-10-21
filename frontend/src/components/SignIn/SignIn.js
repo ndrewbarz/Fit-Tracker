@@ -25,17 +25,17 @@ const SignIn = ({ location, history }) => {
 
   const dispatch = useDispatch();
 
-  const userLogin = useSelector((state) => state.userLogin);
-  const { loading, error, userInfo } = userLogin;
+  const user = useSelector((state) => state.user);
+  // const { loading, error } = user;
   const redirect = location.search
     ? location.search.split('=')[1]
     : '/dashboard';
 
   useEffect(() => {
-    if (userInfo) {
+    if (user) {
       history.push(redirect);
     }
-  }, [history, userInfo, redirect]);
+  }, [history, user, redirect]);
 
   const submitHandler = (e) => {
     e.preventDefault();

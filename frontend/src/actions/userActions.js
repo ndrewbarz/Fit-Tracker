@@ -34,7 +34,7 @@ export const login = (email, password) => async (dispatch) => {
       payload: data,
     });
 
-    localStorage.setItem('userInfo', JSON.stringify(data));
+    localStorage.setItem('user', JSON.stringify(data));
   } catch (error) {
     dispatch({
       type: USER_LOGIN_FAIL,
@@ -98,7 +98,6 @@ export const verify = (email, verifyCode) => async (dispatch) => {
     const {
       data: { token },
     } = await axios.post('/api/auth/verify', { email, verifyCode }, config);
-
     // dispatch({
     //   type: USER_VERIFY_SUCCESS,
     //   payload: data,

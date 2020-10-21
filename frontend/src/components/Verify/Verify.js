@@ -27,18 +27,18 @@ const Verify = ({ location, history }) => {
 
   const dispatch = useDispatch();
 
-  const userVerify = useSelector((state) => state.token);
-  // const { loading, error, userInfo } = userVerify;
+  // const auth = useSelector((state) => state.auth);
+  // const { loading, error, isAuth } = auth;
 
   // const redirect = location.search
   //   ? location.pathname.split('/')[2]
   //   : '/dashboard';
 
   // useEffect(() => {
-  //   if (userInfo) {
+  //   if (isAuth) {
   //     history.push(redirect);
   //   }
-  // }, [history, userInfo, redirect]);
+  // }, [history, isAuth, redirect]);
 
   useEffect(() => {
     setEmail(emailUrl);
@@ -46,13 +46,11 @@ const Verify = ({ location, history }) => {
 
   const submitHandler = async (e) => {
     e.preventDefault();
-
     const success = await dispatch(verify(email, verifyCode));
     if (success) {
       history.push('/dashboard');
     }
   };
-
   const classes = useStyles();
 
   return (

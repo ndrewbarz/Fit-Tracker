@@ -6,6 +6,7 @@ import Sidebar from './components/Sidebar/Sidebar';
 import Container from '@material-ui/core/Container';
 
 import authRoutes from './routes/authRoutes';
+import profileRoutes from './routes/profileRoutes';
 import Verify from './components/Verify/Verify';
 
 const useStyles = makeStyles((theme) => ({
@@ -44,7 +45,7 @@ const App = () => {
   return (
     <Router>
       <div className={classes.toolbar} />
-      <Sidebar authRoutes={authRoutes} />
+      <Sidebar authRoutes={authRoutes} profileRoutes={profileRoutes} />
       <Container maxWidth='sm'>
         <main className={classes.content}>
           {switchRoutes}

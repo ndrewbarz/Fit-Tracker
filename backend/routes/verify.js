@@ -20,7 +20,7 @@ router.post('/verify', async (req, res) => {
     // Проверяем код верификации
     if (verifyCode === user.verifyCode) {
       // Если пользователь верифицирован - отправляем токен
-      await user.updateOne({ isVerified: true });
+      await user.updateOne({ isVerified: true }, { new: true });
 
       const payload = {
         user: user._id,
@@ -33,7 +33,7 @@ router.post('/verify', async (req, res) => {
       res.json({
         // _id: user._id,
         // email: user.email,
-        // isVerified: user.isVerified,
+        isVerified: user.isVerified,
         token: generateToken(user._id),
       });
     } else {
