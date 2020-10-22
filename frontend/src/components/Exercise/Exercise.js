@@ -1,22 +1,68 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState, useEffect } from 'react';
+// import { Link } from 'react-router-dom';
+import { makeStyles } from '@material-ui/core/styles';
+import { TextField } from '@material-ui/core';
+import { Button } from '@material-ui/core';
+import { Typography } from '@material-ui/core';
+
 import { useDispatch, useSelector } from 'react-redux';
-import { exercises } from '../../actions/exerciseAction';
+
+const useStyles = makeStyles((theme) => ({
+  root: {
+    '& > *': {
+      margin: theme.spacing(1),
+      width: '25ch',
+    },
+    display: 'flex',
+    flexDirection: 'column',
+  },
+}));
 
 const Exercise = () => {
-  const [exs, setExs] = useState([]);
-
-  const exer = useSelector((state) => state.exercises);
-  console.log(exer);
   const dispatch = useDispatch();
 
-  useEffect(() => {
-    const fetchExercises = async () => {
-      await dispatch(exercises('exercises'));
-      setExs(exer);
-    };
-    fetchExercises();
-  }, [dispatch]);
-  return <div>NEW EXERCISE</div>;
+  const { exercises } = useSelector((state) => state.userData);
+
+  const classes = useStyles();
+
+  return (
+    <>
+      {/* {error && } */}
+      <form
+        className={classes.root}
+        noValidate
+        autoComplete='off'
+        // onSubmit={submitHandler}
+      >
+        {exercises &&
+          exercises.map((exercise) => (
+            <Typography variant='h2' gutterBottom>
+              {exercise.name}
+            </Typography>
+          ))}
+
+        {/* <TextField
+          label='Email'
+          type='email'
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+        />
+        <TextField
+          label='Password'
+          type='password'
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
+        />
+
+        <Button variant='contained' color='primary' type='submit'>
+          Sign In
+        </Button> */}
+        {/* <Link to={redirect ? `/register?redirect=${redirect}` : '/register'}>
+          Don't have an account? Sign Up
+        </Link> */}
+      </form>
+    </>
+  );
 };
 
 export default Exercise;

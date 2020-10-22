@@ -1,7 +1,10 @@
 import {
+  GET_USER,
+  START_UP_DATA,
   USER_LOGIN_FAIL,
   USER_LOGIN_REQUEST,
   USER_LOGIN_SUCCESS,
+  USER_LOGOUT,
   USER_REGISTER_FAIL,
   USER_REGISTER_REQUEST,
   USER_REGISTER_SUCCESS,
@@ -98,20 +101,13 @@ export const verify = (email, verifyCode) => async (dispatch) => {
     const {
       data: { token },
     } = await axios.post('/api/auth/verify', { email, verifyCode }, config);
-    // dispatch({
-    //   type: USER_VERIFY_SUCCESS,
-    //   payload: data,
-    // });
 
-    // dispatch({
-    //   type: USER_LOGIN_SUCCESS,
-    //   payload: data,
-    // });
     if (token) {
       dispatch({
         type: USER_VERIFY_SUCCESS,
       });
     }
+
     localStorage.setItem('token', token);
     return true;
   } catch (error) {
@@ -122,6 +118,34 @@ export const verify = (email, verifyCode) => async (dispatch) => {
           ? error.response.data.message
           : error.message,
     });
+    return false;
+  }
+};
+
+export const logout = () => async (dispatch) => {
+  localStorage.removeItem('token');
+
+  dispatch({ type: USER_LOGOUT });
+};
+
+const getToken = () => localStorage.getItem('token');
+
+export const getStartupData = () => async (dispatch) => {
+  try {
+    const token = getToken();
+    const config = {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    };
+
+    const { data } = await axios.get('/api/user', config);
+    dispatch({
+      type: START_UP_DATA,
+      payload: data,
+    });
+  } catch (error) {
+    console.log(error);
     return false;
   }
 };

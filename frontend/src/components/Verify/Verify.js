@@ -48,7 +48,7 @@ const Verify = ({ location, history }) => {
     e.preventDefault();
     const success = await dispatch(verify(email, verifyCode));
     if (success) {
-      history.push('/dashboard');
+      history.push('/profile/dashboard');
     }
   };
   const classes = useStyles();

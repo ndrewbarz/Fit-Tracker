@@ -29,7 +29,7 @@ const SignIn = ({ location, history }) => {
   // const { loading, error } = user;
   const redirect = location.search
     ? location.search.split('=')[1]
-    : '/dashboard';
+    : '/profile/dashboard';
 
   useEffect(() => {
     if (user) {

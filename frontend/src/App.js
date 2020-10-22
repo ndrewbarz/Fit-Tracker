@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import { makeStyles } from '@material-ui/core/styles';
 
@@ -8,6 +8,10 @@ import Container from '@material-ui/core/Container';
 import authRoutes from './routes/authRoutes';
 import profileRoutes from './routes/profileRoutes';
 import Verify from './components/Verify/Verify';
+
+import { useDispatch, useSelector } from 'react-redux';
+import { userVerifySuccess } from './reducers/userReducers';
+import { getStartupData } from './actions/userActions';
 
 const useStyles = makeStyles((theme) => ({
   // necessary for content to be below app bar
@@ -20,27 +24,45 @@ const useStyles = makeStyles((theme) => ({
     marginTop: '100px',
   },
 }));
-
-const switchRoutes = (
-  <Switch>
-    {authRoutes.map((prop, key) => {
-      if (prop.layout === '/account') {
-        return (
-          <Route
-            path={prop.layout + prop.path}
-            component={prop.component}
-            key={key}
-          />
-        );
-      }
-      return null;
-    })}
-    {/* <Redirect from='/admin' to='/admin/dashboard' /> */}
-  </Switch>
-);
-
 const App = () => {
+  const { isAuth } = useSelector((state) => state.auth);
+
+  const switchRoutes = (
+    <Switch>
+      {!isAuth
+        ? authRoutes.map((prop, key) => {
+            if (prop.layout === '/account') {
+              return (
+                <Route
+                  path={prop.layout + prop.path}
+                  component={prop.component}
+                  key={key}
+                />
+              );
+            }
+          })
+        : profileRoutes.map((prop, key) => {
+            if (prop.layout === '/profile') {
+              return (
+                <Route
+                  path={prop.layout + prop.path}
+                  component={prop.component}
+                  key={key}
+                />
+              );
+            }
+          })}
+    </Switch>
+  );
+
   const classes = useStyles();
+  const dispatch = useDispatch();
+  useEffect(() => {
+    if (localStorage.getItem('token')) {
+      dispatch(userVerifySuccess());
+      dispatch(getStartupData());
+    }
+  }, []);
 
   return (
     <Router>
@@ -50,10 +72,6 @@ const App = () => {
         <main className={classes.content}>
           {switchRoutes}
           <Route path='/account/verify' component={Verify} />
-          {/* <Switch>
-          <Route path='/register' component={SignUp} />
-          <Route path='/login' component={SignIn} />
-        </Switch> */}
         </main>
       </Container>
     </Router>

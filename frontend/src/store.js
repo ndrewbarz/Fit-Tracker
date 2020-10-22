@@ -6,20 +6,16 @@ import {
   userLoginReducer,
   userRegisterReducer,
   userVerifyReducer,
+  startupDataReducer,
 } from './reducers/userReducers';
 import { getExercisesReducer } from './reducers/exerciseReducer';
-
-// const reducer = combineReducers({
-//   userLogin: userLoginReducer,
-//   userRegister: userRegisterReducer,
-//   userVerify: userVerifyReducer,
-// });
 
 const reducer = combineReducers({
   user: userLoginReducer,
   userRegisterReducer,
   auth: userVerifyReducer,
   exercises: getExercisesReducer,
+  userData: startupDataReducer,
 });
 
 const userInfoFromStorage = localStorage.getItem('user')

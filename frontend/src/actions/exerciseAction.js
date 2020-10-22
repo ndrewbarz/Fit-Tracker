@@ -3,9 +3,10 @@ import {
   EXERCISE_FAIL,
   EXERCISE_REQUEST,
   EXERCISE_SUCCESS,
+  NEW_EXERCISE,
 } from '../constants/exerciseConstants';
 
-export const exercises = (id) => async (dispatch) => {
+export const newExercise = (id) => async (dispatch) => {
   try {
     dispatch({
       type: EXERCISE_REQUEST,
@@ -22,18 +23,12 @@ export const exercises = (id) => async (dispatch) => {
     const { data } = await axios.get(`/api/exercises/${id}`, config);
 
     dispatch({
-      type: EXERCISE_SUCCESS,
+      type: NEW_EXERCISE,
       payload: data,
     });
 
     // localStorage.setItem('user', JSON.stringify(data));
   } catch (error) {
-    dispatch({
-      type: EXERCISE_FAIL,
-      payload:
-        error.response && error.response.data.message
-          ? error.response.data.message
-          : error.message,
-    });
+    console.log(error);
   }
 };

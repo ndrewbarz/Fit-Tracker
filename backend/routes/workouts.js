@@ -1,11 +1,11 @@
 const express = require('express');
 const router = express.Router();
-const auth = require('../middleware/auth');
+// const auth = require('../middleware/auth');
 const Workout = require('../models/Workout');
 
 // @route		POST api/workout
 // @desc		Create new workout
-router.post('/:userId', auth, async (req, res) => {
+router.post('/:userId', async (req, res) => {
   const { date, exercises } = req.body;
   try {
     const newWorkout = new Workout({

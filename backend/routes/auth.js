@@ -14,15 +14,19 @@ dotenv.config();
 // @route		GET api/auth
 // @desc		Get Logged in user
 // @access	Private
-router.get('/', (req, res) => {
+router.get('/', async (req, res) => {
+  const user = await User.findById(req.user._id);
+  const exercises = await Exercise.find({ userId: req.user._id });
+  const workouts = await Workout.find({ userId: req.user._id });
   return res.json({
-    id: req.user.id,
-    email: req.user.email,
+    id: user._id,
+    exercises,
+    workouts,
   });
 });
 
-// @route		POST api/auth
-// @desc		Auth user & get token
+// @route		POST api/auth/
+// @desc		Login & get token
 // @access	Public
 router.post(
   '/login',
@@ -42,18 +46,17 @@ router.post(
 
     try {
       const user = await User.findOne({ email });
-      // Проверка введенных данных
-      // Проверка email
+      // Check data
       if (!user) {
         return res.status(400).json({ msg: 'Invalid email or password' });
       }
 
       const isMatch = await bcrypt.compare(password, user.password);
-      // Если пароль не совпадает
+      // if password do not match
       if (!isMatch) {
         return res.status(400).json({ msg: 'Invalid email or password' });
       }
-      // Если Пользователь верифицирован - отдаем токен
+      // If user verified - send token
       if (user.isVerified) {
         const payload = {
           user: user._id,

@@ -11,15 +11,14 @@ router.post('/verify', async (req, res) => {
 
   try {
     const user = await User.findOne({ email });
-    // Проверка введенных данных
-    // Проверка email
+    // Check data
     if (!user) {
       return res.status(400).json({ msg: 'invalid inputs' });
     }
 
-    // Проверяем код верификации
+    // Check verify code
     if (verifyCode === user.verifyCode) {
-      // Если пользователь верифицирован - отправляем токен
+      // If user verified - send token
       await user.updateOne({ isVerified: true }, { new: true });
 
       const payload = {

@@ -9,6 +9,8 @@ import {
   USER_VERIFY_REQUEST,
   USER_VERIFY_SUCCESS,
   USER_VERIFY_FAIL,
+  GET_USER,
+  START_UP_DATA,
 } from '../constants/userConstants';
 
 // const initialState = {
@@ -75,8 +77,31 @@ export const userLoginReducer = (state = {}, action) => {
       return { loading: false, user: action.payload };
     case USER_LOGIN_FAIL:
       return { loading: false, error: action.payload };
+    // case USER_LOGOUT:
+    //   return { userData: {} };
+    default:
+      return state;
+  }
+};
+
+export const userLogoutReducer = (state = {}, action) => {
+  switch (action.type) {
     case USER_LOGOUT:
-      return {};
+      return { userData: {} };
+    default:
+      return state;
+  }
+};
+
+export const userVerifySuccess = (payload) => ({
+  type: USER_VERIFY_SUCCESS,
+  payload,
+});
+
+export const startupDataReducer = (state = {}, action) => {
+  switch (action.type) {
+    case START_UP_DATA:
+      return { ...state }, action.payload;
     default:
       return state;
   }

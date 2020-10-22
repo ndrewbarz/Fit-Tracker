@@ -18,6 +18,7 @@ import MenuItem from '@material-ui/core/MenuItem';
 import { NavLink } from 'react-router-dom';
 
 import { useDispatch, useSelector } from 'react-redux';
+import { logout } from '../../actions/userActions';
 
 // Sidebar styling
 const drawerWidth = 240;
@@ -63,11 +64,8 @@ const useStyles = makeStyles((theme) => ({
 export default function Sidebar({ authRoutes, profileRoutes }) {
   const [toggle, setToggle] = useState(null);
 
-  const auth = useSelector((state) => state.auth);
-
-  const { isAuth } = auth;
-  // const data = localStorage.getItem('token');
-  // console.log(data);
+  const { isAuth } = useSelector((state) => state.auth);
+  const dispatch = useDispatch();
 
   // Toggle
   const handleClick = (event) => {
@@ -75,6 +73,7 @@ export default function Sidebar({ authRoutes, profileRoutes }) {
   };
   const handleClose = () => {
     setToggle(null);
+    dispatch(logout());
   };
 
   const classes = useStyles();
@@ -89,7 +88,7 @@ export default function Sidebar({ authRoutes, profileRoutes }) {
           {isAuth ? (
             <Typography variant='h6' noWrap>
               {/* {userInfo.email} */}
-              BLA BLA
+              USER
               <AccountCircleIcon
                 className={classes.profileIcon}
                 onClick={handleClick}

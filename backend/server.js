@@ -26,6 +26,11 @@ app.use('/api/auth', require('./routes/auth'));
 app.use('/api/auth', require('./routes/verify'));
 
 app.use(
+  '/api/user',
+  passport.authenticate('jwt', { session: false }),
+  require('./routes/auth')
+);
+app.use(
   '/api/exercises',
   passport.authenticate('jwt', { session: false }),
   require('./routes/exercises')
