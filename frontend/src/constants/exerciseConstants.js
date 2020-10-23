@@ -3,3 +3,4 @@ export const EXERCISE_SUCCESS = 'EXERCISE_SUCCESS';
 export const EXERCISE_FAIL = 'EXERCISE_FAIL';
 
 export const NEW_EXERCISE = 'NEW_EXERCISE';
+export const GET_EXERCISES = 'GET_EXERCISES';

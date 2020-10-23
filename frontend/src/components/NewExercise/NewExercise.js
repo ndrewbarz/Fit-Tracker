@@ -8,6 +8,7 @@ import { Select } from '@material-ui/core';
 import { MenuItem } from '@material-ui/core';
 
 import { useDispatch, useSelector } from 'react-redux';
+import { newExercise } from '../../actions/exerciseAction';
 
 const useStyles = makeStyles((theme) => ({
   formControl: {
@@ -21,46 +22,56 @@ const useStyles = makeStyles((theme) => ({
 
 const NewExercise = () => {
   const dispatch = useDispatch();
-  const [exerciseName, setExerciseName] = useState('');
-  // const { exercises } = useSelector((state) => state.userData);
+  const [name, setName] = useState('');
+  const [measurementType, setMeasurementType] = useState('');
 
+  const { exercises, id } = useSelector((state) => state.userData);
+  // console.log(exercises);
   const classes = useStyles();
-  const [age, setAge] = useState('');
 
-  const handleChange = (event) => {
-    setAge(event.target.value);
+  const handleType = (e) => {
+    setMeasurementType(e.target.value);
   };
 
-  const handleSubmit = () => {};
+  const handleName = (e) => {
+    setName(e.target.value);
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    // await exercises.push(dispatch(newExercise(id, name, measurementType)));
+    dispatch(newExercise(id, name, measurementType));
+    console.log(exercises);
+  };
 
   return (
     <>
       {/* {error && } */}
-      <form className={classes.root} noValidate autoComplete='off'>
+      <form
+        className={classes.root}
+        noValidate
+        autoComplete='off'
+        onSubmit={handleSubmit}
+      >
         <TextField
           label='Exercise'
           type='text'
-          value={exerciseName}
-          onChange={(e) => setExerciseName(e.target.value)}
+          value={name}
+          onChange={handleName}
         />
         <InputLabel id='select-exercise'>Measurement Type</InputLabel>
         <Select
           labelId='select-exercise'
           id='demo-simple-select'
-          value={age}
-          onChange={handleChange}
+          value={measurementType}
+          onChange={handleType}
         >
-          <MenuItem value={10}>kgs</MenuItem>
-          <MenuItem value={20}>metrs</MenuItem>
-          <MenuItem value={30}>some</MenuItem>
+          <MenuItem value='kgs'>kgs</MenuItem>
+          <MenuItem value='metrs'>metrs</MenuItem>
+          <MenuItem value='some'>some</MenuItem>
         </Select>
 
-        <Button
-          variant='contained'
-          color='primary'
-          type='submit'
-          onSubmit={handleSubmit}
-        >
+        <Button variant='contained' color='primary' type='submit'>
           Create Exercise
         </Button>
         {/* <Link to={redirect ? `/register?redirect=${redirect}` : '/register'}>

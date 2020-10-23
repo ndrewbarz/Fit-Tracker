@@ -6,6 +6,7 @@ import { Button } from '@material-ui/core';
 import { Typography } from '@material-ui/core';
 
 import { useDispatch, useSelector } from 'react-redux';
+import { getExercises } from '../../actions/exerciseAction';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -21,10 +22,14 @@ const useStyles = makeStyles((theme) => ({
 const Exercise = () => {
   const dispatch = useDispatch();
 
-  const { exercises } = useSelector((state) => state.userData);
-
+  const { exercises, id } = useSelector((state) => state.userData);
+  console.log(id);
   const classes = useStyles();
-
+  useEffect(() => {
+    if (id) {
+      dispatch(getExercises(id));
+    }
+  }, []);
   return (
     <>
       {/* {error && } */}
@@ -36,7 +41,7 @@ const Exercise = () => {
       >
         {exercises &&
           exercises.map((exercise) => (
-            <Typography variant='h2' gutterBottom>
+            <Typography variant='h6' gutterBottom>
               {exercise.name}
             </Typography>
           ))}

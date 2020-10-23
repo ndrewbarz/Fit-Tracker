@@ -12,9 +12,9 @@ import { getExercisesReducer } from './reducers/exerciseReducer';
 
 const reducer = combineReducers({
   user: userLoginReducer,
-  userRegisterReducer,
+  // userRegisterReducer,
   auth: userVerifyReducer,
-  exercises: getExercisesReducer,
+  // exercises: getExercisesReducer,
   userData: startupDataReducer,
 });
 

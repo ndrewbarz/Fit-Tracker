@@ -12,3 +12,6 @@ export const USER_VERIFY_SUCCESS = 'USER_VERIFY_SUCCESS';
 export const USER_VERIFY_FAIL = 'USER_VERIFY_FAIL';
 
 export const START_UP_DATA = 'START_UP_DATA';
+
+// ______________________
+export const SET_USER = 'SET_USER';

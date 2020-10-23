@@ -26,7 +26,6 @@ const useStyles = makeStyles((theme) => ({
 }));
 const App = () => {
   const { isAuth } = useSelector((state) => state.auth);
-
   const switchRoutes = (
     <Switch>
       {!isAuth
@@ -57,12 +56,20 @@ const App = () => {
 
   const classes = useStyles();
   const dispatch = useDispatch();
+  const token = localStorage.getItem('token');
   useEffect(() => {
-    if (localStorage.getItem('token')) {
+    if (token) {
       dispatch(userVerifySuccess());
       dispatch(getStartupData());
     }
-  }, []);
+  }, [token]);
+
+  // useEffect(() => {
+  //   if (token && isAuth) {
+  //     dispatch(userVerifySuccess());
+  //     dispatch(getStartupData());
+  //   }
+  // }, [isAuth, token]);
 
   return (
     <Router>

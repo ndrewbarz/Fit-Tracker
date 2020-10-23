@@ -3,14 +3,6 @@ import { useDispatch } from 'react-redux';
 import { getStartupData } from '../../actions/userActions';
 
 const Dashboard = () => {
-  const dispatch = useDispatch();
-  const token = localStorage.getItem('token');
-  useEffect(() => {
-    if (token) {
-      dispatch(getStartupData());
-    }
-    return;
-  }, []);
   return (
     <div>
       Dashboard Lorem ipsum dolor sit amet, consectetur adipisicing elit. Earum

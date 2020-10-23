@@ -19,7 +19,15 @@ router.post('/:userId', async (req, res) => {
 
     const exercise = await newExercise.save();
 
-    return res.json(exercise);
+    // return res.json({
+    //   name: exercise.name,
+    //   measurementType: exercise.measurementType,
+    // });
+
+    return res.json({
+      name: exercise.name,
+      measurementType: exercise.measurementType,
+    });
   } catch (err) {
     res.status(500).json({ msg: 'Server error' });
   }

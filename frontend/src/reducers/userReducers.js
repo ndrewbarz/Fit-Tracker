@@ -58,8 +58,8 @@ const initialState = {
 
 export const userVerifyReducer = (state = initialState, action) => {
   switch (action.type) {
-    case USER_VERIFY_REQUEST:
-      return { loading: true };
+    // case USER_VERIFY_REQUEST:
+    //   return { loading: true };
     case USER_VERIFY_SUCCESS:
       return { loading: false, token: action.payload, isAuth: true };
     // case USER_VERIFY_FAIL:

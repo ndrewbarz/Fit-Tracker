@@ -102,13 +102,14 @@ export const verify = (email, verifyCode) => async (dispatch) => {
       data: { token },
     } = await axios.post('/api/auth/verify', { email, verifyCode }, config);
 
+    localStorage.setItem('token', token);
+
     if (token) {
       dispatch({
         type: USER_VERIFY_SUCCESS,
       });
     }
 
-    localStorage.setItem('token', token);
     return true;
   } catch (error) {
     dispatch({
