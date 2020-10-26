@@ -87,7 +87,7 @@ export default function Sidebar() {
       <AppBar position='fixed' className={classes.appBar}>
         <Toolbar>
           <Typography variant='h6' noWrap className={classes.title}>
-            Permanent drawer
+            Fit Trainer
           </Typography>
           {isVerified ? (
             <Typography variant='h6' noWrap>

@@ -49,6 +49,7 @@ router.post(
       user.verifyCode = code;
 
       let verifyLink = `http://localhost:3000/account/verify?email=${user.email}`;
+      console.log(`Link: ${verifyLink}, Code: ${code}`);
       // Save user
       await user.save();
 

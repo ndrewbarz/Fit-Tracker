@@ -11,6 +11,7 @@ import {
   getExercises,
   updateExercises,
 } from '../../actions/exerciseAction';
+import { Link } from 'react-router-dom';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -46,10 +47,10 @@ const Exercises = () => {
     await dispatch(deleteExercises(id));
   };
 
-  // Исправить
-  // const handleUpdate = () => {
-  //   dispatch(updateExercises(exercises));
-  // };
+  const handleUpdate = () => {
+    // dispatch(updateExercises(exercises));
+    console.log('Updating doesnt work yet!');
+  };
 
   useEffect(() => {
     if (exercises !== undefined) {
@@ -59,11 +60,7 @@ const Exercises = () => {
 
   return (
     <>
-      {/* {error && } */}
       <form className={classes.root} noValidate autoComplete='off'>
-        {exercises === undefined && (
-          <Typography variant='h3'>No Exercises yet</Typography>
-        )}
         {exercises &&
           exercises.map((exercise) => (
             <div key={exercise._id} className={classes.root}>
@@ -76,6 +73,7 @@ const Exercises = () => {
               />
               <Select
                 labelId='select-exercise'
+                key={exercise._id + 'select'}
                 id={exercise._id}
                 defaultValue={exercise.measurementType}
                 onChange={handleType}
@@ -85,6 +83,7 @@ const Exercises = () => {
                 <MenuItem value='seconds'>seconds</MenuItem>
               </Select>
               <Button
+                key={exercise._id + 'btn'}
                 variant='contained'
                 color='secondary'
                 onClick={() => handleDelete(exercise._id)}
@@ -93,13 +92,20 @@ const Exercises = () => {
               </Button>
             </div>
           ))}
-        <Button
-          variant='contained'
-          color='secondary'
-          // onClick={() => handleUpdate()}
-        >
-          Update exercises
-        </Button>
+        {exercises && exercises.length ? (
+          <Button
+            variant='contained'
+            color='secondary'
+            onClick={() => handleUpdate()}
+          >
+            Update exercises
+          </Button>
+        ) : (
+          <>
+            <Typography variant='h3'>No exercise to edit</Typography>
+            <Link to='/profile/new-exercise'>Create new exercise</Link>
+          </>
+        )}
       </form>
     </>
   );

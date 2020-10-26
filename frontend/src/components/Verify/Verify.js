@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from 'react';
-import { Link, useHistory } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 import { makeStyles } from '@material-ui/core/styles';
 import { TextField } from '@material-ui/core';
 import { Button } from '@material-ui/core';
 import { Typography } from '@material-ui/core';
 
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { verify } from '../../actions/userAction';
 
 const useStyles = makeStyles((theme) => ({
@@ -64,9 +64,6 @@ const Verify = ({ location }) => {
         <Button variant='contained' color='primary' type='submit'>
           Verify Email
         </Button>
-        {/* <Link to={redirect ? `/register?redirect=${redirect}` : '/register'}>
-          Don't have an account? Sign Up
-        </Link> */}
       </form>
     </>
   );

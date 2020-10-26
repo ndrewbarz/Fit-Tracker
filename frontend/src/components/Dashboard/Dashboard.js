@@ -1,18 +1,11 @@
 import React from 'react';
+import { Typography } from '@material-ui/core';
 
 const Dashboard = () => {
   return (
     <div>
-      Dashboard Lorem ipsum dolor sit amet, consectetur adipisicing elit. Earum
-      minima dicta odio aliquid perspiciatis recusandae incidunt laborum odit,
-      voluptas ex! Omnis, est! Ducimus fugiat corrupti, neque illum possimus
-      nesciunt iure in, itaque nulla eaque quo! Alias quis amet optio corporis,
-      sunt fugiat fugit magnam unde, esse modi a doloribus nobis illum porro
-      necessitatibus nulla. Quam minima corrupti illo, odit quae recusandae in
-      impedit saepe quisquam facilis rerum. Vel reprehenderit molestiae corporis
-      voluptatum itaque incidunt molestias dolores eveniet ex. Sed corporis eius
-      animi sequi debitis? Quidem, nobis impedit! Itaque veniam, eius placeat
-      quas iste quos eum! Sit, odio veniam. Dolorum, aliquid?
+      <Typography variant='h3'>Dashboard</Typography>
+      <span>(calendar must be here)</span>
     </div>
   );
 };

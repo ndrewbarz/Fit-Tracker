@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { GET_USER, SET_USER } from '../constants/userConstants';
+import { SET_USER } from '../constants/userConstants';
 
 export const register = (email, password) => async (dispatch) => {
   try {
@@ -8,14 +8,8 @@ export const register = (email, password) => async (dispatch) => {
         'Content-Type': 'application/json',
       },
     };
-    const { data } = await axios.post(
-      '/api/auth/register',
-      { email, password },
-      config
-    );
 
-    // ИСПРАВИТЬ - УБРАТЬ в БЭК, УБРАТЬ const {data}
-    console.log(`Link: ${data.verifyLink}, Code: ${data.verifyCode}`);
+    await axios.post('/api/auth/register', { email, password }, config);
 
     return true;
   } catch (error) {

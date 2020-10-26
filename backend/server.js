@@ -13,9 +13,6 @@ const PORT = process.env.PORT || 5000;
 // middleware
 app.use(express.json({ extended: true }));
 
-// app.use(passport.initialize());
-// require('./middleware/passport')(passport);
-
 app.get('/', (req, res) => {
   res.json({ message: 'Api working' });
 });
@@ -35,7 +32,6 @@ app.use(
   passport.authenticate('jwt', { session: false }),
   require('./routes/exercises')
 );
-// app.use('/api/exercises/:id', require('./routes/exercises'));
 
 app.use(
   '/api/workouts',

@@ -1,6 +1,5 @@
 const express = require('express');
 const router = express.Router();
-// const auth = require('../middleware/auth');
 const Workout = require('../models/Workout');
 
 // @route		POST api/workout

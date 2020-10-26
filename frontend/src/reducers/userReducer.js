@@ -4,7 +4,7 @@ import {
   NEW_EXERCISE,
   UPDATE_EXERCISES,
 } from '../constants/exerciseConstants';
-import { GET_USER, SET_USER, VERIFY_USER } from '../constants/userConstants';
+import { SET_USER } from '../constants/userConstants';
 
 const initialState = {
   _id: '',

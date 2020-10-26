@@ -1,10 +1,6 @@
 const express = require('express');
 const router = express.Router();
-// const auth = require('../middleware/auth');
-// const { findByIdAndDelete } = require('../models/Exercise');
 const Exercise = require('../models/Exercise');
-// const User = require('../models/User');
-// const Workout = require('../models/Workout');
 
 // @route		POST api/exercise
 // @desc		Create exercise
@@ -18,11 +14,6 @@ router.post('/:userId', async (req, res) => {
     });
 
     const exercise = await newExercise.save();
-
-    // return res.json({
-    //   name: exercise.name,
-    //   measurementType: exercise.measurementType,
-    // });
 
     return res.json({
       name: exercise.name,
@@ -61,17 +52,13 @@ router.get('/:id', async (req, res) => {
 router.put('/', async (req, res) => {
   try {
     const { exercises } = req.body;
-    // const exercise = await Exercise.findByIdAndUpdate(
-    //   { _id: req.params.id },
-    //   { name, measurementType },
-    //   { new: true }
-    // );
-    // await exercise.save();
+
     for await (let exercise of exercises) {
-      await Exercise.findOne({ _id: exercise._id }).updateOne({
-        name: exercise.name,
-        measurementType: exercise.measurementType,
-      });
+      await Exercise.findByIdAndUpdate(
+        { _id: exercise._id },
+        { name, measurementType },
+        { new: true }
+      );
     }
 
     res.json({ msg: 'Exercise Updated', exercise });

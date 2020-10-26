@@ -7,9 +7,13 @@ const WorkoutSchema = mongoose.Schema({
   date: { type: Date, require: true, default: new Date() },
   exercises: [
     {
-      type: Schema.Types.ObjectId,
-      required: true,
-      ref: 'exercise',
+      exercise: {
+        type: Schema.Types.ObjectId,
+        required: true,
+        ref: 'exercise',
+      },
+      repeats: { type: String, required: true },
+      measurement: { type: String, required: true },
     },
   ],
 });

@@ -29,16 +29,20 @@ const SignIn = ({ history }) => {
     e.preventDefault();
     setEmail('');
     setPassword('');
-    await dispatch(login(email, password));
-    await dispatch(getUserData());
-    console.log(localStorage.getItem('token'));
-    history.push('/profile/dashboard');
+    const success = await dispatch(login(email, password));
+    if (success) {
+      await dispatch(getUserData());
+      history.push('/profile/dashboard');
+    } else {
+      {
+        alert('Please check your email and password');
+      }
+    }
   };
 
   const classes = useStyles();
   return (
     <>
-      {/* {error && } */}
       <form
         className={classes.root}
         noValidate
