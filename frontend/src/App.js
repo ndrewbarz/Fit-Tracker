@@ -1,17 +1,15 @@
 import React, { useEffect } from 'react';
-import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
+import { BrowserRouter as Router, Route } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+
+import Container from '@material-ui/core/Container';
 import { makeStyles } from '@material-ui/core/styles';
 
 import Sidebar from './components/Sidebar/Sidebar';
-import Container from '@material-ui/core/Container';
-
-import authRoutes from './routes/authRoutes';
-import profileRoutes from './routes/profileRoutes';
 import Verify from './components/Verify/Verify';
 
-import { useDispatch, useSelector } from 'react-redux';
-import { userVerifySuccess } from './reducers/userReducers';
-import { getStartupData } from './actions/userActions';
+import { SwitchRoutes } from './utils/switchRoutes';
+import { getUserData } from './actions/userAction';
 
 const useStyles = makeStyles((theme) => ({
   // necessary for content to be below app bar
@@ -25,59 +23,24 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 const App = () => {
-  const { isAuth } = useSelector((state) => state.auth);
-  const switchRoutes = (
-    <Switch>
-      {!isAuth
-        ? authRoutes.map((prop, key) => {
-            if (prop.layout === '/account') {
-              return (
-                <Route
-                  path={prop.layout + prop.path}
-                  component={prop.component}
-                  key={key}
-                />
-              );
-            }
-          })
-        : profileRoutes.map((prop, key) => {
-            if (prop.layout === '/profile') {
-              return (
-                <Route
-                  path={prop.layout + prop.path}
-                  component={prop.component}
-                  key={key}
-                />
-              );
-            }
-          })}
-    </Switch>
-  );
-
   const classes = useStyles();
+
   const dispatch = useDispatch();
   const token = localStorage.getItem('token');
+
   useEffect(() => {
     if (token) {
-      dispatch(userVerifySuccess());
-      dispatch(getStartupData());
+      dispatch(getUserData());
     }
-  }, [token]);
-
-  // useEffect(() => {
-  //   if (token && isAuth) {
-  //     dispatch(userVerifySuccess());
-  //     dispatch(getStartupData());
-  //   }
-  // }, [isAuth, token]);
+  }, []);
 
   return (
     <Router>
       <div className={classes.toolbar} />
-      <Sidebar authRoutes={authRoutes} profileRoutes={profileRoutes} />
+      <Sidebar />
       <Container maxWidth='sm'>
         <main className={classes.content}>
-          {switchRoutes}
+          <SwitchRoutes />
           <Route path='/account/verify' component={Verify} />
         </main>
       </Container>

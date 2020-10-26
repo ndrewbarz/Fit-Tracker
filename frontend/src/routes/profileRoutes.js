@@ -1,9 +1,11 @@
 import AccountBoxIcon from '@material-ui/icons/AccountBox';
 
 import Dashboard from '../components/Dashboard/Dashboard';
-import Exercise from '../components/Exercise/Exercise';
+import Exercises from '../components/Exercises/Exercises';
 import NewExercise from '../components/NewExercise/NewExercise';
-import Workout from '../components/Workout/Workout';
+import NewWorkout from '../components/NewWorkout/NewWorkout';
+import Workouts from '../components/Workouts/Workouts';
+// import Workout from '../components/Workout/Workout';
 
 const profileRoutes = [
   {
@@ -15,23 +17,30 @@ const profileRoutes = [
   },
   {
     path: '/exercises',
-    name: 'Exercises',
+    name: 'Edit exercises',
     icon: AccountBoxIcon,
-    component: Exercise,
+    component: Exercises,
     layout: '/profile',
   },
   {
     path: '/new-exercise',
-    name: 'New Exercise',
+    name: 'New exercise',
     icon: AccountBoxIcon,
     component: NewExercise,
     layout: '/profile',
   },
   {
-    path: '/workout',
-    name: 'New Workout',
+    path: '/new-workout',
+    name: 'New workout',
     icon: AccountBoxIcon,
-    component: Workout,
+    component: NewWorkout,
+    layout: '/profile',
+  },
+  {
+    path: '/edit-workout',
+    name: 'Edit workouts',
+    icon: AccountBoxIcon,
+    component: Workouts,
     layout: '/profile',
   },
 ];

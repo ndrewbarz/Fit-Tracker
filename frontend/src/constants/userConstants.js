@@ -1,17 +1,3 @@
-export const USER_LOGIN_REQUEST = 'USER_LOGIN_REQUEST';
-export const USER_LOGIN_SUCCESS = 'USER_LOGIN_SUCCESS';
-export const USER_LOGIN_FAIL = 'USER_LOGIN_FAIL';
-export const USER_LOGOUT = 'USER_LOGOUT';
-
-export const USER_REGISTER_REQUEST = 'USER_REGISTER_REQUEST';
-export const USER_REGISTER_SUCCESS = 'USER_REGISTER_SUCCESS';
-export const USER_REGISTER_FAIL = 'USER_REGISTER_FAIL';
-
-export const USER_VERIFY_REQUEST = 'USER_VERIFY_REQUEST';
-export const USER_VERIFY_SUCCESS = 'USER_VERIFY_SUCCESS';
-export const USER_VERIFY_FAIL = 'USER_VERIFY_FAIL';
-
-export const START_UP_DATA = 'START_UP_DATA';
-
-// ______________________
 export const SET_USER = 'SET_USER';
+export const GET_USER = 'GET_USER';
+export const VERIFY_USER = 'VERIFY_USER';

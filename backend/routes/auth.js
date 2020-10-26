@@ -19,7 +19,9 @@ router.get('/', async (req, res) => {
   const exercises = await Exercise.find({ userId: req.user._id });
   const workouts = await Workout.find({ userId: req.user._id });
   return res.json({
-    id: user._id,
+    _id: user._id,
+    email: user.email,
+    isVerified: user.isVerified,
     exercises,
     workouts,
   });
@@ -67,9 +69,6 @@ router.post(
           });
         };
         res.json({
-          _id: user._id,
-          email: user.email,
-          isVerified: user.isVerified,
           token: generateToken(user._id),
         });
       } else {

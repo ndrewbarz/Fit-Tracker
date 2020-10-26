@@ -20,9 +20,10 @@ router.post('/verify', async (req, res) => {
     if (verifyCode === user.verifyCode) {
       // If user verified - send token
       await user.updateOne({ isVerified: true }, { new: true });
+      const updatedUser = await User.findOne({ email });
 
       const payload = {
-        user: user._id,
+        user: updatedUser._id,
       };
       const generateToken = (id) => {
         return jwt.sign(payload, process.env.jwtSecret, {
@@ -30,10 +31,12 @@ router.post('/verify', async (req, res) => {
         });
       };
       res.json({
-        // _id: user._id,
-        // email: user.email,
-        isVerified: user.isVerified,
-        token: generateToken(user._id),
+        _id: updatedUser._id,
+        email: updatedUser.email,
+        isVerified: updatedUser.isVerified,
+        exercises: updatedUser.exercises,
+        workouts: updatedUser.workouts,
+        token: generateToken(updatedUser._id),
       });
     } else {
       res.status(400).json({ msg: 'invalid verify code' });

@@ -1,5 +1,3 @@
-// import Dashboard from '@material-ui/icons/Dashboard';
-// import Person from '@material-ui/icons/Person';
 import AccountBoxIcon from '@material-ui/icons/AccountBox';
 
 import SignUp from '../components/SignUp/SignUp';

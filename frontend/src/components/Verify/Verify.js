@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from 'react';
-// import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import { makeStyles } from '@material-ui/core/styles';
 import { TextField } from '@material-ui/core';
 import { Button } from '@material-ui/core';
 import { Typography } from '@material-ui/core';
 
 import { useDispatch, useSelector } from 'react-redux';
-import { verify } from '../../actions/userActions';
+import { verify } from '../../actions/userAction';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -19,26 +19,13 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const Verify = ({ location, history }) => {
+const Verify = ({ location }) => {
   const [email, setEmail] = useState('');
   const [verifyCode, setVerifyCode] = useState('');
 
   const emailUrl = location.search.split('=')[1];
-
+  const history = useHistory();
   const dispatch = useDispatch();
-
-  // const auth = useSelector((state) => state.auth);
-  // const { loading, error, isAuth } = auth;
-
-  // const redirect = location.search
-  //   ? location.pathname.split('/')[2]
-  //   : '/dashboard';
-
-  // useEffect(() => {
-  //   if (isAuth) {
-  //     history.push(redirect);
-  //   }
-  // }, [history, isAuth, redirect]);
 
   useEffect(() => {
     setEmail(emailUrl);
@@ -46,16 +33,17 @@ const Verify = ({ location, history }) => {
 
   const submitHandler = async (e) => {
     e.preventDefault();
-    const success = await dispatch(verify(email, verifyCode));
-    if (success) {
+    await dispatch(verify(email, verifyCode));
+    const token = localStorage.getItem('token');
+    if (token) {
       history.push('/profile/dashboard');
     }
   };
+
   const classes = useStyles();
 
   return (
     <>
-      {/* {error && } */}
       <form
         className={classes.root}
         noValidate
@@ -65,13 +53,7 @@ const Verify = ({ location, history }) => {
         <Typography variant='h2' gutterBottom>
           Verify your email
         </Typography>
-        <TextField
-          label='Email'
-          type='email'
-          value={email}
-          disabled
-          // onChange={(e) => setEmail(e.target.value)}
-        />
+        <TextField label='Email' type='email' value={email} disabled />
         <TextField
           label='Verify code'
           type='password'

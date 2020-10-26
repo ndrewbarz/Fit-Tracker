@@ -1,6 +1,4 @@
-import React, { useEffect } from 'react';
-import { useDispatch } from 'react-redux';
-import { getStartupData } from '../../actions/userActions';
+import React from 'react';
 
 const Dashboard = () => {
   return (

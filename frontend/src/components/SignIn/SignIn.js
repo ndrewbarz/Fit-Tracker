@@ -1,12 +1,12 @@
-import React, { useState, useEffect } from 'react';
-// import { Link } from 'react-router-dom';
+import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
 import { makeStyles } from '@material-ui/core/styles';
 import { TextField } from '@material-ui/core';
 import { Button } from '@material-ui/core';
 import { Typography } from '@material-ui/core';
 
-import { useDispatch, useSelector } from 'react-redux';
-import { login } from '../../actions/userActions';
+import { useDispatch } from 'react-redux';
+import { getUserData, login } from '../../actions/userAction';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -19,32 +19,23 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const SignIn = ({ location, history }) => {
+const SignIn = ({ history }) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
   const dispatch = useDispatch();
 
-  const user = useSelector((state) => state.user);
-  // const { loading, error } = user;
-  const redirect = location.search
-    ? location.search.split('=')[1]
-    : '/profile/dashboard';
-
-  useEffect(() => {
-    if (user) {
-      history.push(redirect);
-    }
-  }, [history, user, redirect]);
-
-  const submitHandler = (e) => {
+  const submitHandler = async (e) => {
     e.preventDefault();
-    // Dispatch login
-    dispatch(login(email, password));
+    setEmail('');
+    setPassword('');
+    await dispatch(login(email, password));
+    await dispatch(getUserData());
+    console.log(localStorage.getItem('token'));
+    history.push('/profile/dashboard');
   };
 
   const classes = useStyles();
-
   return (
     <>
       {/* {error && } */}
@@ -69,13 +60,10 @@ const SignIn = ({ location, history }) => {
           value={password}
           onChange={(e) => setPassword(e.target.value)}
         />
-
         <Button variant='contained' color='primary' type='submit'>
           Sign In
         </Button>
-        {/* <Link to={redirect ? `/register?redirect=${redirect}` : '/register'}>
-          Don't have an account? Sign Up
-        </Link> */}
+        <Link to='/account/register'>Don't have an account? Sign Up</Link>
       </form>
     </>
   );

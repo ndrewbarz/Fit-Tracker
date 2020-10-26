@@ -1,4 +1,6 @@
 import React, { useState } from 'react';
+import { NavLink, useHistory } from 'react-router-dom';
+
 import { makeStyles } from '@material-ui/core/styles';
 import Drawer from '@material-ui/core/Drawer';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -15,10 +17,10 @@ import AccountBoxIcon from '@material-ui/icons/AccountBox';
 import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
 
-import { NavLink } from 'react-router-dom';
-
+import authRoutes from '../../routes/authRoutes';
+import profileRoutes from '../../routes/profileRoutes';
 import { useDispatch, useSelector } from 'react-redux';
-import { logout } from '../../actions/userActions';
+import { logout } from '../../actions/userAction';
 
 // Sidebar styling
 const drawerWidth = 240;
@@ -59,24 +61,26 @@ const useStyles = makeStyles((theme) => ({
     padding: theme.spacing(3),
   },
 }));
-// const useStyles = makeStyles(styles);
 
-export default function Sidebar({ authRoutes, profileRoutes }) {
+export default function Sidebar() {
+  const history = useHistory();
   const [toggle, setToggle] = useState(null);
-
-  const { isAuth } = useSelector((state) => state.auth);
+  const { isVerified, email } = useSelector((state) => state.user);
   const dispatch = useDispatch();
-
+  const token = localStorage.getItem('token');
   // Toggle
   const handleClick = (event) => {
     setToggle(event.currentTarget);
   };
+
   const handleClose = () => {
     setToggle(null);
     dispatch(logout());
+    history.push('/account/login');
   };
 
   const classes = useStyles();
+
   return (
     <div className={classes.root}>
       <CssBaseline />
@@ -85,10 +89,9 @@ export default function Sidebar({ authRoutes, profileRoutes }) {
           <Typography variant='h6' noWrap className={classes.title}>
             Permanent drawer
           </Typography>
-          {isAuth ? (
+          {isVerified ? (
             <Typography variant='h6' noWrap>
-              {/* {userInfo.email} */}
-              USER
+              {email}
               <AccountCircleIcon
                 className={classes.profileIcon}
                 onClick={handleClick}
@@ -118,12 +121,14 @@ export default function Sidebar({ authRoutes, profileRoutes }) {
         <div className={classes.toolbar} />
         <Divider />
         <List>
-          {!isAuth
+          {!isVerified && !token
             ? authRoutes.map((prop, key) => (
                 <NavLink
+                  exact
                   to={prop.layout + prop.path}
                   key={key}
-                  activeClassName={classes.active}
+                  // activeClassName={classes.active}
+                  // activeStyle={{ color: 'blue' }}
                   className={classes.listItemText}
                 >
                   <ListItem button key={key}>
@@ -151,16 +156,6 @@ export default function Sidebar({ authRoutes, profileRoutes }) {
               ))}
         </List>
         <Divider />
-        {/* <List>
-          {['All mail', 'Trash', 'Spam'].map((text, index) => (
-            <ListItem button key={text}>
-              <ListItemIcon>
-                {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
-              </ListItemIcon>
-              <ListItemText primary={text} />
-            </ListItem>
-          ))}
-        </List> */}
       </Drawer>
     </div>
   );

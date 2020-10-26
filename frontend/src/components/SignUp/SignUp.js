@@ -1,12 +1,12 @@
-import React, { useState, useEffect } from 'react';
-// import { Link } from 'react-router-dom';
+import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
 import { makeStyles } from '@material-ui/core/styles';
 import { TextField } from '@material-ui/core';
 import { Button } from '@material-ui/core';
 import { Typography } from '@material-ui/core';
 
-import { useDispatch, useSelector } from 'react-redux';
-import { register } from '../../actions/userActions';
+import { useDispatch } from 'react-redux';
+import { register } from '../../actions/userAction';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -19,26 +19,13 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const SignUp = ({ location, history }) => {
+const SignUp = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
   const [isSuccessSignup, setIsSuccessSignup] = useState(false);
 
   const dispatch = useDispatch();
-
-  // const userRegister = useSelector((state) => state.userRegister);
-  // const { loading, error, userInfo } = userRegister;
-  // console.log(userInfo);
-  // const redirect = location.search
-  //   ? location.search.split('=')[1]
-  //   : '/account/verify';
-
-  // useEffect(() => {
-  //   if (userInfo) {
-  //     history.push(redirect);
-  //   }
-  // }, [history, userInfo, redirect]);
 
   const submitHandler = async (e) => {
     e.preventDefault();
@@ -48,6 +35,9 @@ const SignUp = ({ location, history }) => {
       const success = await dispatch(register(email, password));
       if (success) {
         setIsSuccessSignup(true);
+        setConfirmPassword('');
+        setEmail('');
+        setPassword('');
       }
     }
   };
@@ -88,9 +78,8 @@ const SignUp = ({ location, history }) => {
         <Button variant='contained' color='primary' type='submit'>
           Sign Up
         </Button>
-        {/* <Link to={redirect ? `/register?redirect=${redirect}` : '/register'}>
-          Don't have an account? Sign Up
-        </Link> */}
+        <Link to='/account/login'>Do you have an account? Sign In</Link>
+
         {isSuccessSignup && <h1>Please check your email</h1>}
       </form>
     </>

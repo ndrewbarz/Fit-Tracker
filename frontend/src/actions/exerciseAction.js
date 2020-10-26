@@ -1,10 +1,9 @@
 import axios from 'axios';
 import {
-  EXERCISE_FAIL,
-  EXERCISE_REQUEST,
-  EXERCISE_SUCCESS,
+  DELETE_EXERCISE,
   GET_EXERCISES,
   NEW_EXERCISE,
+  UPDATE_EXERCISES,
 } from '../constants/exerciseConstants';
 
 export const newExercise = (id, name, measurementType) => async (dispatch) => {
@@ -23,7 +22,7 @@ export const newExercise = (id, name, measurementType) => async (dispatch) => {
       { name, measurementType },
       config
     );
-    console.log(data);
+
     dispatch({
       type: NEW_EXERCISE,
       payload: data,
@@ -49,12 +48,51 @@ export const getExercises = (id) => async (dispatch) => {
       type: GET_EXERCISES,
       payload: data,
     });
-    console.log(data);
   } catch (error) {
     console.log(error);
   }
 };
-export const getExercisesSuccess = (payload) => ({
-  type: GET_EXERCISES,
-  payload,
-});
+
+export const deleteExercises = (id) => async (dispatch) => {
+  try {
+    const token = localStorage.getItem('token');
+
+    const config = {
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${token}`,
+      },
+    };
+
+    await axios.delete(`/api/exercises/${id}`, config);
+
+    dispatch({
+      type: DELETE_EXERCISE,
+      payload: id,
+    });
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export const updateExercises = (exercise) => async (dispatch) => {
+  try {
+    const token = localStorage.getItem('token');
+
+    const config = {
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${token}`,
+      },
+    };
+
+    const data = await axios.put(`/api/exercises/`, { exercise }, config);
+    console.log(data);
+    dispatch({
+      type: UPDATE_EXERCISES,
+      payload: data,
+    });
+  } catch (error) {
+    console.log(error);
+  }
+};
